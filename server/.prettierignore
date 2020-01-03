@@ -1,0 +1,16 @@
+/node_modules/
+/public/
+
+package.json
+
+# Ignore configs
+jest.config.js
+tsconfig.json
+tslint.json
+
+# Ignore existing source files
+src/core/core.d.ts
+src/pages/App/app.module.scss
+src/resources/locales/en.json
+src/resources/styles/mixins.scss
+src/resources/styles/reset.scss
