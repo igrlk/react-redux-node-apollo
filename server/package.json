@@ -7,12 +7,14 @@
 		"start": "nodemon ."
 	},
 	"keywords": [],
-	"author": "",
+	"user": "",
 	"license": "ISC",
 	"dependencies": {
 		"apollo-server": "2.9.15",
 		"graphql": "14.5.8",
-		"graphql-compose": "7.8.0"
+		"graphql-compose": "7.8.0",
+		"knex": "^0.20.6",
+		"pg": "^7.17.0"
 	},
 	"devDependencies": {
 		"eslint": "6.8.0",

@@ -1,37 +1,34 @@
 const { schemaComposer } = require('graphql-compose');
 
-require('./types/Post');
-require('./types/Author');
+const knex = require('./knex');
 
-const posts = require('./data/posts');
-const authors = require('./data/authors');
+require('./types/Note');
+require('./types/User');
 
 schemaComposer.Query.addFields({
-	posts: {
-		type: '[Post]',
-		resolve: () => posts,
+	notes: {
+		type: '[Note]',
+		resolve: () => knex('notes').select(),
 	},
-	author: {
-		type: 'Author',
+	note: {
+		type: 'Note',
 		args: { id: 'Int!' },
-		resolve: (_, { id }) => authors.find(author => author.id === id),
+		resolve: (_, { id }) =>
+			knex('notes')
+				.where({ id })
+				.first(),
 	},
-});
-
-schemaComposer.Mutation.addFields({
-	upvotePost: {
-		type: 'Post',
-		args: {
-			postId: 'Int!',
-		},
-		resolve: (_, { postId }) => {
-			const post = posts.find(post => post.id === postId);
-			if (!post) {
-				throw new Error(`Couldn't find post with id ${postId}`);
-			}
-			post.votes += 1;
-			return post;
-		},
+	users: {
+		type: '[User]',
+		resolve: () => knex('users').select(),
+	},
+	user: {
+		type: 'User',
+		args: { id: 'Int!' },
+		resolve: async (_, { id }) =>
+			knex('users')
+				.where({ id })
+				.first(),
 	},
 });
 

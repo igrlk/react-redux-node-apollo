@@ -54,6 +54,7 @@
 		"no-param-reassign": ["off"],
 		"jsx-a11y/anchor-is-valid": ["off"],
 		"jsx-a11y/no-noninteractive-element-interactions": ["off"],
-		"no-lonely-if": "off"
+		"no-lonely-if": "off",
+		"react/jsx-indent": ["error", "tab"]
 	}
 }
