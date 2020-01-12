@@ -1,7 +1,5 @@
 const { schemaComposer } = require('graphql-compose');
 
-const knex = require('../knex');
-
 const Note = schemaComposer.createObjectTC({
 	name: 'Note',
 	fields: {
@@ -15,11 +13,7 @@ const Note = schemaComposer.createObjectTC({
 Note.addFields({
 	user: {
 		type: 'User',
-		resolve: ({ userId }) => {
-			return knex('users')
-				.where({ id: userId })
-				.first();
-		},
+		resolve: ({ userId }, _, ctx) => ctx.models.User.getById(userId),
 	},
 });
 

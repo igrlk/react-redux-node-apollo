@@ -1,7 +1,8 @@
 const { ApolloServer } = require('apollo-server');
-const knex = require('./src/knex');
 
+const knex = require('./src/knex');
 const schema = require('./src/schema');
+const models = require('./src/models');
 
 Promise.resolve()
 	.then(async () => {
@@ -64,7 +65,12 @@ Promise.resolve()
 		}
 	})
 	.then(() => {
-		const server = new ApolloServer({ schema });
+		const server = new ApolloServer({
+			schema,
+			context: () => {
+				return { models };
+			},
+		});
 		server.listen().then(({ url }) => {
 			console.log(`🚀  Server ready at ${url}`);
 		});

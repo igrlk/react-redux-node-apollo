@@ -1,19 +1,18 @@
 const { schemaComposer } = require('graphql-compose');
 
-const knex = require('../knex');
-
 const User = schemaComposer.createObjectTC({
 	name: 'User',
 	fields: {
 		id: 'Int!',
-		name: 'String',
+		name: 'String!',
+		password: 'String!',
 	},
 });
 
 User.addFields({
 	notes: {
 		type: '[Note]',
-		resolve: ({ id }) => knex('notes').where({ userId: id }),
+		resolve: ({ id }, _, ctx) => ctx.models.Note.getByUserId(id),
 	},
 });
 

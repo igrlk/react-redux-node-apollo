@@ -1,0 +1,2 @@
+require('./Note');
+require('./User');
