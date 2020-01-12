@@ -11,7 +11,7 @@ const User = schemaComposer.createObjectTC({
 
 User.addFields({
 	notes: {
-		type: '[Note]',
+		type: '[Note!]!',
 		resolve: ({ id }, _, ctx) => ctx.models.Note.getByUserId(id),
 	},
 });

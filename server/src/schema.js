@@ -5,20 +5,20 @@ require('./types');
 
 schemaComposer.Query.addFields({
 	notes: {
-		type: '[Note]',
+		type: '[Note!]!',
 		resolve: (_, __, ctx) => ctx.models.Note.getAll(),
 	},
 	note: {
-		type: 'Note',
+		type: 'Note!',
 		args: { id: 'Int!' },
 		resolve: (_, { id }, ctx) => ctx.models.Note.getById(id),
 	},
 	users: {
-		type: '[User]',
+		type: '[User!]!',
 		resolve: (_, __, ctx) => ctx.models.User.getAll(),
 	},
 	user: {
-		type: 'User',
+		type: 'User!',
 		args: { id: 'Int!' },
 		resolve: async (_, { id }, ctx) => ctx.models.User.getById(id),
 	},
