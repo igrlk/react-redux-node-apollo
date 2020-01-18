@@ -1,16 +1,22 @@
+require('dotenv').config();
 const { ApolloServer } = require('apollo-server');
 
 const knex = require('./src/knex');
 const schema = require('./src/schema');
-const models = require('./src/models');
+const context = require('./src/context');
 
 Promise.resolve()
 	.then(async () => {
-		await knex.schema.dropTable('notes');
-		await knex.schema.dropTable('users');
+		try {
+			await knex.schema.dropTable('notes');
+			await knex.schema.dropTable('users');
+		} catch (ex) {
+			console.error(ex);
+		}
 		await knex.schema.createTable('users', table => {
 			table.increments('id');
 			table.string('name');
+			table.string('password');
 		});
 
 		await knex.schema.createTable('notes', table => {
@@ -67,10 +73,9 @@ Promise.resolve()
 	.then(() => {
 		const server = new ApolloServer({
 			schema,
-			context: () => {
-				return { models };
-			},
+			context,
 		});
+
 		server.listen().then(({ url }) => {
 			console.log(`🚀  Server ready at ${url}`);
 		});

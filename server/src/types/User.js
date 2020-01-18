@@ -5,7 +5,6 @@ const User = schemaComposer.createObjectTC({
 	fields: {
 		id: 'Int!',
 		name: 'String!',
-		password: 'String!',
 	},
 });
 
