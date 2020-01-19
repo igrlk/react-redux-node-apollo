@@ -1,32 +1,28 @@
 const { AuthenticationError } = require('apollo-server');
 const jwt = require('jsonwebtoken');
 
-const knex = require('./knex');
-const models = require('./models');
+const db = require('./models');
 
 module.exports = async ({ req, res }) => {
-	let user;
 	try {
-		user = await getUserFromReq(req);
+		const user = await getUserFromReq(req);
+
+		const hasRole = role => (user && Array.isArray(user.roles) ? user.roles.includes(role) : false);
+		const withAuth = cb => (user ? cb() : new AuthenticationError(`User is not authenticated`));
+
+		return { req, res, models: { User: db.User, Note: db.Note }, user, hasRole, withAuth };
 	} catch (e) {
 		throw new AuthenticationError('Token is incorrect');
 	}
-
-	const hasRole = role => (user && Array.isArray(user.roles) ? user.roles.includes(role) : false);
-	const withAuth = cb => (user ? cb() : new AuthenticationError(`User is not authenticated`));
-
-	return { req, res, models, user, hasRole, withAuth };
 };
 
 async function getUserFromReq(req) {
-	const { token } = req.headers;
+	const [, token] = (req.headers.authorization || '').split(' ');
 	if (token) {
 		const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
 		const { id } = payload;
 		if (id) {
-			const user = await knex('users')
-				.where({ id })
-				.first();
+			const user = await db.User.findByPk(id);
 			if (user) {
 				return user;
 			}

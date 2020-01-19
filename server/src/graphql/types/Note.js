@@ -13,7 +13,7 @@ const Note = schemaComposer.createObjectTC({
 Note.addFields({
 	user: {
 		type: 'User!',
-		resolve: ({ userId }, _, ctx) => ctx.models.User.getById(userId),
+		resolve: async ({ userId }, _, ctx) => ctx.models.User.findByPk(userId),
 	},
 });
 
