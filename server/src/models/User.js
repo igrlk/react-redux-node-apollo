@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			name: DataTypes.STRING,
 			password: DataTypes.STRING,
+			roles: DataTypes.ARRAY(DataTypes.STRING),
 		},
 		{},
 	);

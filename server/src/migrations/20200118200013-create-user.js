@@ -14,6 +14,7 @@ module.exports = {
 			password: {
 				type: Sequelize.STRING,
 			},
+			roles: Sequelize.ARRAY(Sequelize.STRING),
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,
