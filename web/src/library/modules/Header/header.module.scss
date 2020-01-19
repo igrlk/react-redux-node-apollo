@@ -1,0 +1,29 @@
+.header {
+	width: 100vw;
+	height: 60px;
+	background: #ececec;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+	margin-bottom: 20px;
+
+	&Inner {
+		width: 1200px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+}
+
+.rightSide {
+	display: flex;
+
+	&Username {
+		font-weight: 700;
+	}
+
+	&Logout {
+		margin-left: 30px;
+	}
+}
