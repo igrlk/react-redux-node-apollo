@@ -12,7 +12,7 @@
 	"user": "",
 	"license": "ISC",
 	"dependencies": {
-		"apollo-server": "2.9.15",
+		"apollo-server": "2.14.2",
 		"bcrypt": "^3.0.7",
 		"dotenv": "^8.2.0",
 		"graphql": "14.5.8",
